@@ -69,7 +69,10 @@ const CURRENCIES: { value: Currency; label: string; symbol: string }[] = [
   { value: "EUR", label: "Euro", symbol: "€" },
 ];
 
-const EXAMPLE = `Bu ay harcamalarım:
+const EXAMPLES: Array<{ label: string; text: string }> = [
+  {
+    label: "Aile · 3 kişi",
+    text: `Bu ay harcamalarım:
 - Kira 18.000 TL
 - Elektrik 650, su 220, doğalgaz 480, internet 390
 - Market: Hafta sonu BİM-Migros toplam 7.800 civarı (3 hafta)
@@ -81,7 +84,39 @@ const EXAMPLE = `Bu ay harcamalarım:
 - Giyim: 2 pantolon toplam 2400
 - Kuaför 350
 - Kredi kartı asgari 1500
-- Bu ay tasarruf hesabına 0 attım`;
+- Bu ay tasarruf hesabına 0 attım`,
+  },
+  {
+    label: "Öğrenci · burslu",
+    text: `Burs + yarım-zamanlı iş toplam gelir:
+- Yurt yemek + ulaşım kartı 2.800
+- Kitap + fotokopi 450
+- Kafeter 10x180 = 1800
+- Giyim/ayakkabı 1200
+- Telefon faturası 200
+- Spor salonu 650
+- Film/konser 400
+- 2 kez Trendyol siparişi 900
+- Ailemden harçlık geldi 1500 ama bu ay hiç bir şey biriktiremedim`,
+  },
+  {
+    label: "Serbest · tasarruf",
+    text: `Bu ay freelancer kazancım 42.000 TL net.
+Sabit gider:
+- Kira 11.000
+- Fatura toplamı 1.400
+- Ofis + telefon 900
+- Sağlık sigortası 1.800
+Değişken:
+- Market 5.200
+- Restoran 2.300
+- Benzin 2.100
+- Netflix + Spotify 240
+- Spor 850
+- 2 online kurs aboneliği 1600
+Bu ay 6.000 TL yatırım hesabına attım, tasarrufum iyi gidiyor sanki.`,
+  },
+];
 
 const BTN_PRIMARY =
   "inline-flex items-center justify-center gap-1.5 rounded-lg bg-brand-navy px-4 py-2 text-sm font-semibold text-white shadow-sm transition hover:bg-brand-navy/90 hover:shadow focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-emerald focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 dark:bg-brand-emerald dark:text-brand-navy";
@@ -249,14 +284,17 @@ export function FinansAsistaniApp() {
                   </>
                 )}
               </button>
-              <button
-                type="button"
-                onClick={() => setExpensesText(EXAMPLE)}
-                disabled={loading}
-                className={BTN_OUTLINE}
-              >
-                Örnek doldur
-              </button>
+              {EXAMPLES.map((ex) => (
+                <button
+                  key={ex.label}
+                  type="button"
+                  onClick={() => setExpensesText(ex.text)}
+                  disabled={loading}
+                  className={BTN_OUTLINE}
+                >
+                  {ex.label}
+                </button>
+              ))}
             </div>
 
             <p className={cn("text-[11px]", MUTED_TEXT)}>
